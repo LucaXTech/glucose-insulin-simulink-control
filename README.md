@@ -4,7 +4,7 @@ Academic MATLAB/Simulink portfolio project on glucose–insulin dynamics modelli
 
 This repository documents a simplified biomedical control-system workflow developed for academic purposes. It is intended as a technical portfolio example in biomedical modelling, simulation and control.
 
-**Disclaimer:** this is an academic modelling project. It is not a clinical model, not a medical device algorithm and it is not intended for therapeutic decision-making.
+> **Disclaimer:** this is an academic modelling project. It is not a clinical model, not a medical device algorithm and it is not intended for therapeutic decision-making.
 
 ## Project scope
 
@@ -38,8 +38,9 @@ scripts/
   run_baseline_patient_profiles.m
   run_all_scenarios.m
   configure_bergman_model.m
+  configure_portfolio_output_probes.m
+  find_block_by_display_name.m
   extract_sim_signal.m
-  extract_probed_signal.m
 
 figures/
   healthy_vs_type2_baseline.png
@@ -72,29 +73,43 @@ run('scripts/run_control_strategy_comparison.m')
 
 The control-comparison script plots blood glucose `G(t)`, applied exogenous insulin input `I_ext_applied`, absorbed subcutaneous insulin `Q_absorbed`, plasma insulin `I(t)` and delayed insulin action `X(t)`.
 
+## Optional script
+
+The script below can also be run to include the uncontrolled type 1 profile:
+
+```matlab
+run('scripts/run_baseline_patient_profiles.m')
+```
+
+This optional comparison includes healthy, type 1 and type 2 profiles with external insulin/control disabled. The uncontrolled type 1 profile is expected to produce very high glucose values in this simplified academic model, so it is not used as the main portfolio figure.
+
 ## Example results
 
-The main portfolio figures are stored in the `figures/` folder.
+The main portfolio figures are stored in the `figures/` folder and are shown below.
 
 ### Healthy vs Type 2 baseline
 
 The baseline comparison shows the difference between a healthy profile and a type 2 diabetic / insulin-resistant profile with external insulin disabled.
 
+![Healthy vs Type 2 baseline](figures/healthy_vs_type2_baseline.png)
+
 In the tested configuration:
 
-* the healthy profile reached a peak glucose value of approximately 159 mg/dL;
-* the type 2 profile reached a peak glucose value of approximately 232 mg/dL;
+* the healthy profile reached a peak glucose value of approximately **159 mg/dL**;
+* the type 2 profile reached a peak glucose value of approximately **232 mg/dL**;
 * the type 2 profile showed a higher mean glucose level across the simulation.
 
 ### Type 2 control strategy comparison
 
 For the type 2 profile, PID and fuzzy control both reduced postprandial glucose peaks compared with the no-control condition.
 
+![Type 2 control strategy comparison](figures/type2_control_strategy_comparison.png)
+
 In the tested configuration:
 
-* no external insulin reached a peak glucose value of approximately 232 mg/dL;
-* PID control reduced the peak glucose value to approximately 147 mg/dL;
-* fuzzy control reduced the peak glucose value to approximately 155 mg/dL;
+* no external insulin reached a peak glucose value of approximately **232 mg/dL**;
+* PID control reduced the peak glucose value to approximately **147 mg/dL**;
+* fuzzy control reduced the peak glucose value to approximately **155 mg/dL**;
 * the fuzzy controller achieved a comparable glucose response with a lower peak applied insulin command than the PID controller.
 
 These results are configuration-dependent and should be interpreted only as outputs of a simplified academic simulation model.
@@ -108,11 +123,51 @@ The original Simulink model contains both controller-internal signals and model-
 
 This ensures that the plotted insulin input corresponds to the input actually delivered to the physiological absorption block in each simulated scenario.
 
-## Software
+The resulting interpretation chain is:
 
-Developed and tested with MATLAB/Simulink in an academic environment.
+```text
+control strategy → applied I_ext(t) → absorbed Q(t) → plasma I(t) → delayed insulin action X(t) → glucose G(t)
+```
 
-The scripts reload the Simulink model before adding temporary plotting probes, so repeated runs should not require saving the model. If MATLAB asks whether to save changes to the Simulink model after running the scripts, the model can be closed without saving.
+## Requirements
+
+The project requires MATLAB and Simulink.
+
+The fuzzy-control configuration uses a `.fis` file, so MATLAB installations with Fuzzy Logic Toolbox support are recommended for full functionality.
+
+The scripts were developed and tested in an academic MATLAB/Simulink environment. Different MATLAB releases may require minor adjustments in Simulink model handling.
+
+## How to reproduce the main figures
+
+From the repository root, run:
+
+```matlab
+run('scripts/run_all_scenarios.m')
+```
+
+This runs the selector inspection and generates the two main portfolio figures:
+
+```text
+figures/healthy_vs_type2_baseline.png
+figures/type2_control_strategy_comparison.png
+```
+
+Alternatively, run the scripts individually:
+
+```matlab
+run('scripts/inspect_model_selectors.m')
+run('scripts/run_healthy_vs_type2_baseline.m')
+run('scripts/run_control_strategy_comparison.m')
+```
+
+The scripts reload the Simulink model before adding temporary plotting probes. If MATLAB asks whether to save changes to the Simulink model after running the scripts, the model can be closed without saving.
+
+## Documentation
+
+Additional notes are provided in:
+
+* `docs/model_configuration.md`: selector values, signal-logging strategy and model configuration notes;
+* `docs/project_summary.md`: short technical summary of the academic modelling workflow.
 
 ## Author
 
