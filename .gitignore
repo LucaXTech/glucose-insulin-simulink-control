@@ -1,0 +1,21 @@
+# MATLAB / Simulink generated files
+slprj/
+*.slxc
+*.asv
+*.m~
+*.autosave
+*.mex*
+*.log
+*.tmp
+*.bak
+
+# MATLAB preferences / cache
+*.matlab
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large or local-only outputs
+outputs/
+results/tmp/
