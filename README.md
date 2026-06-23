@@ -171,5 +171,5 @@ Additional notes are provided in:
 
 ## Author
 
-**Luca Serioli**
-MSc Biomedical Engineering
+**Luca Serioli**<br>
+Biomedical Engineer<br>
