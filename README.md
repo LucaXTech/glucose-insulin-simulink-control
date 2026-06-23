@@ -1,8 +1,8 @@
-# Glucose–Insulin Simulink Control Portfolio
+# Glucose–Insulin Dynamics Modelling and Control in Simulink
 
-Academic MATLAB/Simulink portfolio project on glucose–insulin dynamics modelling and control using an extended Bergman-based model.
+Academic MATLAB/Simulink project on glucose–insulin dynamics modelling and control using an extended Bergman-based model.
 
-This repository documents a simplified biomedical control-system workflow developed for academic purposes. It is intended as a technical portfolio example in biomedical modelling, simulation and control.
+This repository documents a simplified biomedical control-system workflow developed for academic and portfolio purposes. It is intended as a technical example in biomedical modelling, simulation and control.
 
 > **Disclaimer:** this is an academic modelling project. It is not a clinical model, not a medical device algorithm and it is not intended for therapeutic decision-making.
 
